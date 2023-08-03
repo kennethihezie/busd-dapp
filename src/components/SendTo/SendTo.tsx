@@ -57,8 +57,10 @@ const SendTo = ({onClick, transferToken, busdBal, isLoading}: ISendTo) => {
 
    const handleSubmit = async (e: any) => {
       e.preventDefault()
-
+      
       if(isAddressValid && isAmountValid){
+         setIsFirstAddress(true)
+         setIsFirstAmount(true)
          await transferToken(e.target.amount.value, e.target.address.value)
       }
    }
