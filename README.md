@@ -34,13 +34,13 @@ This project uses ether.js library to interact with blockchain and web3modal to 
 
 # Project setup
 
-# => Install metamask web extension, Create a wallet on metamask.
+=> Install metamask web extension, Create a wallet on metamask.
 
-# => Note: If you deployed your BUSDHandler contract on bsc testnet, Add bsc testnet  network on metamask wallet and switch to it.
+=> Note: If you deployed your BUSDHandler contract on bsc testnet, Add bsc testnet  network on metamask wallet and switch to it.
 
-# => Else If you deployed your BUSDHandler contract on polygon testnet, Add polygon munbai testnet network on metamask wallet and switch to it.
+=> Else If you deployed your BUSDHandler contract on polygon testnet, Add polygon munbai testnet network on metamask wallet and switch to it.
 
-# => Replace BUSD_CONTRACT_ADDRESS variable at ./src/config/contract_abi.ts to your BUSDHandler contract deployed address.
+=> Replace BUSD_CONTRACT_ADDRESS variable at ./src/config/contract_abi.ts to your BUSDHandler contract deployed address.
 
 ```
 => git clone https://github.com/kennethihezie/busd-dapp.git
