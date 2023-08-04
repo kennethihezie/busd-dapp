@@ -4,6 +4,8 @@ interface IBnbBusdBalanceText {
     busdBal?: number
 }
 
+//Created by Collins Ihezie on 03/08/203
+
 const BnbBusdBalanceText = ({bnbBal, busdBal}: IBnbBusdBalanceText) => {
     return (
         <div className="flex flex-col items-center text-white py-4">

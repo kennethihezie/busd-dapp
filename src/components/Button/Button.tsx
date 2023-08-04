@@ -1,3 +1,6 @@
+//Created by Collins Ihezie on 03/08/203
+
+
 interface IButtonProp {
     onClick: () => void
     isConnected?: boolean

@@ -1,5 +1,7 @@
 import CircleAvater from "../CircleAvater/CircleAvater"
 
+//Created by Collins Ihezie on 03/08/203
+
 const Logo = () => {
     return (
         <div className="hidden md:flex flex-row justify-center space-x-4 items-center mt-8 mb-6">

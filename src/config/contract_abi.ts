@@ -1,4 +1,7 @@
-export const BUSD_CONTRACT_ADDRESS = ""
+//Created by Collins Ihezie on 03/08/203
+
+
+export const BUSD_CONTRACT_ADDRESS = "0x23f30571723c8DC669E1d8785383825338c5a86c"
 
 export const abi  = [
     {

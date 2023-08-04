@@ -1,3 +1,5 @@
+//Created by Collins Ihezie on 03/08/203
+
 const BscNavItem = () => {
     return (
         <div className="rounded-full px-3 bg-background py-2 text-white flex flex-row space-x-2 items-center text-sm">

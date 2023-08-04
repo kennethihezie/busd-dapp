@@ -1,6 +1,8 @@
 import Helpers from "@/config/helpers/helpers"
 import { CopyAllRounded } from "@mui/icons-material"
 
+//Created by Collins Ihezie on 03/08/203
+
 interface IAddressProp{
     account: string
 }

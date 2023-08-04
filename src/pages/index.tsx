@@ -9,24 +9,27 @@ import RowButton from "@/components/RowButton/RowButton";
 import SendTo from "@/components/SendTo/SendTo";
 import { Component, ReactNode } from "react";
 import Web3Modal from "web3modal";
-import { ethers } from 'ethers';
+import { Contract, ethers } from 'ethers';
 import { contractFactory } from "@/config/contract_factory";
+import { BUSD_CONTRACT_ADDRESS, abi } from "@/config/contract_abi";
+import Helpers from "@/config/helpers/helpers";
 
+//Created by Collins Ihezie on 03/08/203
 
 interface IProps {
   
 }
 
+//create a data type to keep balances
 type data = {
   bnbBalance: number
   busdBalance: number
 }
 
+//defined an interface for state
 interface IState{
   showSendUi: boolean
   walletConnected: boolean,
-  provider: any,
-  signer: any,
   account: string
   data?: data,
   _isLoading: boolean
@@ -34,52 +37,67 @@ interface IState{
 
 export default class Home extends Component<IProps, IState> {
 
-  constructor(props: IProps) {
+   constructor(props: IProps) {
     super (props)
 
     this.state = {
       showSendUi: false,
       walletConnected: false,
-      provider: undefined,
-      signer: undefined,
       account: '',
       data: {
-        busdBalance: 10,
+        busdBalance: 0,
         bnbBalance: 0
       },
       _isLoading: false
     }
+   }
 
-    this.connectWallet = this.connectWallet.bind(this)
-  }
-
-  async connectWallet() {
+   //show metamask from web3Modal to connet wallet
+   getSignerOrProvider = async (needSigner = false) => {
     const providerOptions = {}
+
     const web3modal = new Web3Modal({
-      network: 'BSC Testnet',
-      cacheProvider: true,
+      network: 'mubai',
+      // cacheProvider: true,
       providerOptions: providerOptions
     })
 
-    try{
+    try {
       const provider = await web3modal.connect()
       const signer = new ethers.providers.Web3Provider(provider).getSigner()
       const account = await signer.getAddress()
-      this.setState({ provider, signer, account, walletConnected: true })
 
-      //get balances
-      await this.getBnbAndBusdBalance()
+      this.setState({ account, walletConnected: true })
+
+      if(needSigner){
+        return signer
+      }
+
+      return provider
     } catch(error){
       console.log(error);
     }
-  }
+   }
 
-  getBnbAndBusdBalance = async () => {
-     try {
-        const contract = contractFactory(this.state.provider)
-        const bnbBalance = await contract.getBnbBalance()
-        const busdBalance = await contract.getBusdBalanceOf(this.state.account)
+  //get balances
+  getBnbAndBusdBalance = async () => {    
+     try {        
+        let singerOrProvider = await this.getSignerOrProvider(true)   
+        //get instance of contract     
+        const contract = new Contract(BUSD_CONTRACT_ADDRESS, abi, singerOrProvider)
 
+        //call contract getEtherBalance
+        let bnbBalance = await contract.getEtherBalance()
+
+        //call contract getBusdBalanceOf
+        let busdBalance = await contract.getBusdBalanceOf(this.state.account)
+        
+        //Convert bigint to number
+        bnbBalance = Number(ethers.utils.formatEther(bnbBalance)).toFixed(4)
+
+        //convert ether wei
+        busdBalance = Helpers.convertEtherToWei(busdBalance)
+ 
         this.setState({data: {bnbBalance, busdBalance}})
      } catch (error) {
        console.log(error);
@@ -91,17 +109,22 @@ export default class Home extends Component<IProps, IState> {
   }
 
   transferToken = async (amount: number, address: string): Promise<void> => {
+      //setState to loading.
       this.setState({_isLoading: true})
 
-      const contract = contractFactory(this.state.signer) 
-
+      //get signer from web3modal
+      let singerOrProvider = await this.getSignerOrProvider(true)   
+      
+      //get instance of contract
+      const contract = new Contract(BUSD_CONTRACT_ADDRESS, abi, singerOrProvider)
+      
+      //call transferBusdToken from contract
       await contract.transferBusdToken(address, amount)
+
       //get current balance
       await this.getBnbAndBusdBalance()
 
       this.setState({_isLoading: false, showSendUi: false})
-
-      // setTimeout(()=>{ this.setState({_isLoading: false}) }, 3000)
   }
 
   render(): ReactNode {
@@ -115,7 +138,7 @@ export default class Home extends Component<IProps, IState> {
               <NavBar
                  text = {this.state.walletConnected ? 'Connected' : 'Connect wallet'}
                  isConnected = {this.state.walletConnected}
-                 onClick = { this.connectWallet }
+                 onClick = { this.getBnbAndBusdBalance }
                />
 
               {

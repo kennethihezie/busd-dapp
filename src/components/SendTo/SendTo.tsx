@@ -3,6 +3,7 @@ import { useRef, useState } from "react"
 import Alert from "../Alert/Alert"
 import Helpers from "@/config/helpers/helpers"
 
+//Created by Collins Ihezie on 03/08/203
 
 interface ISendTo {
     onClick: () => void

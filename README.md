@@ -1,38 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# BusdPortal Dapp
 
-## Getting Started
+The BusdPortal is a Dapp that interacts with BusdHandler smart contract which enables
+User send and receive BUSD Tokens.
 
-First, run the development server:
+The project is build using nextjs which is a superset of react framework. And etherjs library is used
+to interact with blockchain.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+This project uses class component and functional components where neccessary, to build a robust UI 
+while managing state changes efficiently.
+
+This project uses ether.js library to interact with blockchain and web3modal to connect wallet like metamask to sign transactions.
+
+# Integration Flow
+
+=> Designed UI components using tsx and tailwindcss.
+=> Added web3modal and ether.js packages.
+=> Setup contract abi and added contract deployed address.
+=> Get an instance of web3modal, connect wallet to get access to provider and signers
+=> Get an instance of Contract class in ether.js using (BusdHandler deployed contract address, abi, and signer(provided by web3modal))
+=> Communocate with blockchain(calling methods on the blockcahin) using the provided instance of ether Contract class.
+
+# Challenges
+=> Ethereum address validation on input field: I had to write a regular expression to validate wallet address
+
+=> Amount validation: I had to add checks to update the UI respectively when a user enters and invalid amount or amount higher than the current wallet balance
+
+# Project setup
 ```
+=> git clone https://github.com/kennethihezie/busd-dapp.git
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+=> cd busd-dapp
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+=> npm install
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+=> npm run dev
+```
