@@ -1,6 +1,5 @@
 import Address from "@/components/Address/Address";
 import BnbBusdBalanceText from "@/components/BnB_Balance_Text/BnbBalText";
-import Card from "@/components/Card/Card";
 import Dashboard from "@/components/Dashboard/Dashboard";
 import Layout from "@/components/Layout/Layout";
 import Logo from "@/components/Logo/Logo";
@@ -10,9 +9,10 @@ import SendTo from "@/components/SendTo/SendTo";
 import { Component, ReactNode } from "react";
 import Web3Modal from "web3modal";
 import { Contract, ethers } from 'ethers';
-import { contractFactory } from "@/config/contract_factory";
 import { BUSD_CONTRACT_ADDRESS, abi } from "@/config/contract_abi";
 import Helpers from "@/config/helpers/helpers";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 //Created by Collins Ihezie on 03/08/203
 
@@ -48,7 +48,7 @@ export default class Home extends Component<IProps, IState> {
         busdBalance: 0,
         bnbBalance: 0
       },
-      _isLoading: false
+      _isLoading: false,
     }
    }
 
@@ -57,7 +57,7 @@ export default class Home extends Component<IProps, IState> {
     const providerOptions = {}
 
     const web3modal = new Web3Modal({
-      network: 'mubai',
+      // network: 'mubai',
       // cacheProvider: true,
       providerOptions: providerOptions
     })
@@ -112,7 +112,8 @@ export default class Home extends Component<IProps, IState> {
       //setState to loading.
       this.setState({_isLoading: true})
 
-      //get signer from web3modal
+      try {
+        //get signer from web3modal
       let singerOrProvider = await this.getSignerOrProvider(true)   
       
       //get instance of contract
@@ -124,12 +125,35 @@ export default class Home extends Component<IProps, IState> {
       //get current balance
       await this.getBnbAndBusdBalance()
 
-      this.setState({_isLoading: false, showSendUi: false})
+       this.setState({_isLoading: false, showSendUi: false})
+       //show toast
+      this.notify(true)
+      } catch(error) {
+        console.log(error);
+        
+        this.setState({_isLoading: false})
+
+        //show toast
+        this.notify(false)
+      }
   }
+
+  notify = (isTransferSuccessful: boolean) => {
+    if(isTransferSuccessful){
+      toast.success("Transaction is pending...", {
+        position: toast.POSITION.TOP_CENTER
+      })
+    } else {
+      toast.error("An error occured", {
+        position: toast.POSITION.TOP_RIGHT
+      })
+    }
+  };
 
   render(): ReactNode {
 
     return (
+    <>
     <Layout>
        <Logo />
 
@@ -176,8 +200,10 @@ export default class Home extends Component<IProps, IState> {
               }
 
       </Dashboard> 
-
     </Layout>
+
+    <ToastContainer />
+    </>
     )
   }
 }

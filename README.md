@@ -14,10 +14,15 @@ This project uses ether.js library to interact with blockchain and web3modal to 
 # Integration Flow
 
 => Designed UI components using tsx and tailwindcss.
+
 => Added web3modal and ether.js packages.
+
 => Setup contract abi and added contract deployed address.
+
 => Get an instance of web3modal, connect wallet to get access to provider and signers
+
 => Get an instance of Contract class in ether.js using (BusdHandler deployed contract address, abi, and signer(provided by web3modal))
+
 => Communocate with blockchain(calling methods on the blockcahin) using the provided instance of ether Contract class.
 
 # Challenges
