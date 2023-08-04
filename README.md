@@ -38,5 +38,7 @@ This project uses ether.js library to interact with blockchain and web3modal to 
 
 => npm install
 
+=> Replace BUSD_CONTRACT_ADDRESS variable at ./src/config/contract_abi.ts to your BUSDHandler contract deployed address.
+
 => npm run dev
 ```
