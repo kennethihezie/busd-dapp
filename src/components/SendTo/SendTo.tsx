@@ -19,11 +19,12 @@ const SendTo = ({onClick, transferToken, busdBal, isLoading}: ISendTo) => {
    const [isFirstAddress, setIsFirstAddress] =  useState<boolean>(true)
    const [isAmountValid, setIsAmountValid] = useState<boolean>(false)
    const [isFirstAmount, setIsFirstAmount] =  useState<boolean>(true)
-
-   let addressInputRef = useRef()
-
+   let inputRef: any
+  
 
    const onAddressChange = (e: any) => {
+      inputRef = e
+
       if(e.target.value == ''){
         setIsTyping(false)
         setIsFirstAddress(true)
@@ -50,9 +51,9 @@ const SendTo = ({onClick, transferToken, busdBal, isLoading}: ISendTo) => {
       }
    }
 
-   const clearAddress = (e: any) => {
+   const clearAddress = () => {
+     inputRef.target.value = ''
     //@ts-ignore
-     alert(addressInputRef?.current);
      setIsTyping(false)
    }
 
@@ -78,7 +79,7 @@ const SendTo = ({onClick, transferToken, busdBal, isLoading}: ISendTo) => {
            <div className="flex flex-col space-y-1">
            <label className="relative block w-full">
             <input id="address" className="w-full border bg-cardBackground text-white border-slate-400 drop-shadow-md rounded-md py-2 pl-3 pr-10"
-                placeholder="Enter public address(0x) or ENS name" type="text" onChange={ onAddressChange } ref={ () => addressInputRef } disabled={ isLoading }/>
+                placeholder="Enter public address(0x) or ENS name" type="text" onChange={ onAddressChange } disabled={ isLoading }/>
 
             <span className="absolute inset-y-0 right-0 flex items-center pr-3">
                 {
