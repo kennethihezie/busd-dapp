@@ -1,5 +1,6 @@
 # BusdPortal Dapp
 
+
 The BusdPortal is a Dapp that interacts with BusdHandler smart contract which enables
 User send and receive BUSD Tokens.
 
@@ -8,6 +9,7 @@ to interact with blockchain.
 
 This project uses class component and functional components where neccessary, to build a robust UI 
 while managing state changes efficiently.
+
 
 This project uses ether.js library to interact with blockchain and web3modal to connect wallet like metamask to sign transactions.
 
