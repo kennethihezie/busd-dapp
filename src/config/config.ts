@@ -6,7 +6,7 @@ export const projectId = 'ddddb30a39bd07de0b087e0247ff46c3'
 const metadata = {
     name: 'Web3Modal',
     description: 'Web3Modal Example',
-    url: 'https://web3modal.com', // origin must match your domain & subdomain
+    url: 'https://busd-dapp.vercel.app/',
     icons: ['https://avatars.githubusercontent.com/u/37784886']
 }
 
